@@ -1,9 +1,9 @@
 function keyUp(e) {
     const hero = lab.cam.hero
     switch(e.code) {
-        case 'ArrowUp':    hero.stop( _.UP ); break;
-        case 'ArrowLeft':  hero.stop( _.LEFT ); break;
-        case 'ArrowDown':  hero.stop( _.DOWN ); break;
-        case 'ArrowRight': hero.stop( _.RIGHT ); break;
+        case 'ArrowUp':    hero.mover.stop( _.UP ); break;
+        case 'ArrowLeft':  hero.mover.stop( _.LEFT ); break;
+        case 'ArrowDown':  hero.mover.stop( _.DOWN ); break;
+        case 'ArrowRight': hero.mover.stop( _.RIGHT ); break;
     }
 }
