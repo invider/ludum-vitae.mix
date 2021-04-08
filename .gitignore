@@ -1,0 +1,10 @@
+
+
+# collider.jam
+.meta.cache
+out
+dist
+*.zip
+*.tag
+*.tgz
+*.log
