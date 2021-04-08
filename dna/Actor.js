@@ -19,6 +19,7 @@ class Actor {
         this.install( dna.pod.frames, {
             tiles: st.tiles || res.punk,
         })
+        this.install( dna.pod.collider )
         this.install( dna.pod.mover )
     }
 

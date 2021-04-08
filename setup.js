@@ -28,6 +28,7 @@ function createActors() {
         y: ry(.2),
     })
     lab.cam.follow( hero, true )
+    lab.cam.lookAt( hero.x, hero.y )
 
     lab.cam.spawn( dna.Actor, {
         name: 'dude1',

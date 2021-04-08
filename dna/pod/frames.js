@@ -54,7 +54,7 @@ function draw() {
                     * this.cycles.cells
                     + this.frame
     const x = this.__.x - this.__.w/2
-    const y = this.__.y - this.__.h/2
+    const y = this.__.y - this.__.h + this.__.collider.h/2
     const w = this.__.w
     const h = this.__.h
 
