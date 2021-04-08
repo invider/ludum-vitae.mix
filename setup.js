@@ -30,24 +30,27 @@ function createActors() {
     lab.cam.follow( hero, true )
 
     lab.cam.spawn( dna.Actor, {
-        name: 'dude2',
+        name: 'dude1',
         dir: _.RIGHT,
         x: rx(.1),
         y: ry(.6),
+        tiles: res.dude1,
     })
 
     lab.cam.spawn( dna.Actor, {
-        name: 'dude3',
+        name: 'girl1',
         dir: _.LEFT,
         x: ry(.9),
         y: ry(.5),
+        tiles: res.girl1,
     })
 
     lab.cam.spawn( dna.Actor, {
-        name: 'dude4',
+        name: 'girl2',
         dir: _.UP,
         x: ry(.5),
         y: ry(.9),
+        tiles: res.girl2,
     })
 }
 

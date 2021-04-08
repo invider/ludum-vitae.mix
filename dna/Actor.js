@@ -19,7 +19,7 @@ class Actor {
         augment(this, df, st)
 
         this.install( dna.pod.frames, {
-            tiles: res.punk,
+            tiles: st.tiles || res.punk,
         })
     }
 
