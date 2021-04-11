@@ -1,7 +1,7 @@
 const alias = 'mover'
 
 const df = {
-    speed: 80,
+    speed: 50,
 }
 
 function onInstall() {
@@ -23,6 +23,13 @@ function move(action) {
 function stop(action) {
     this.actuators[action] = false
     if (!this.isMoving()) this.__.frames.setCycle('idle')
+}
+
+function stopAll() {
+    for (let i = 0; i < this.actuators.length; i++) {
+        this.actuators[i] = false
+    }
+    this.__.frames.setCycle('idle')
 }
 
 function saveCoords() {
