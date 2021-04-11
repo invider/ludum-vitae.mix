@@ -1,4 +1,9 @@
+function handleGlobal(e) {
+    lab.hud.chat.onKeyDown(e)
+}
+
 function keyDown(e) {
+    handleGlobal(e)
     if (e.repeat) return
 
     const hero = lab.cam.hero
