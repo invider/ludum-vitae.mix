@@ -226,11 +226,25 @@ function createFence() {
     */
 }
 
+function gravelAt(x, y) {
+    lab.cam.spawn( dna.prop.Gravel, {
+        x: x,
+        y: y,
+    })
+}
+
+function createRocks() {
+    for (let i = 0; i < 256; i++) {
+        gravelAt( RND(3800) - 1200, RND(2400) - 400 )
+    }
+}
+
 function setup() {
-    lab.background = hsl(.05, .25, .6)
+    lab.background = hsl(.04, .20, .4)
 
     createCamera()
     createHud()
     createActors()
+    createRocks()
     createFence()
 }
