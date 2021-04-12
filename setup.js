@@ -72,10 +72,105 @@ function createActors() {
     girl2.install( dna.pod.randomMover )
 }
 
+function createFence() {
+
+    const w = 64
+    let x = 400
+    let y = 200
+
+    lab.cam.spawn( dna.prop.Fence, {
+        type: 'left',
+        x: x,
+        y: y,
+        w: 128,
+        h: 128,
+    })
+
+    x += w
+    lab.cam.spawn( dna.prop.Fence, {
+        type: 'center',
+        x: x,
+        y: y,
+        w: 128,
+        h: 128,
+    })
+
+    x += w
+    lab.cam.spawn( dna.prop.Fence, {
+        type: 'right',
+        x: x,
+        y: y,
+        w: 128,
+        h: 128,
+    })
+
+
+    x = 350
+    y = 200
+    lab.cam.spawn( dna.prop.Fence, {
+        type: 'top',
+        x: x,
+        y: y,
+        w: 128,
+        h: 128,
+    })
+
+    y += w
+    lab.cam.spawn( dna.prop.Fence, {
+        type: 'middle',
+        x: x,
+        y: y,
+        w: 128,
+        h: 128,
+    })
+
+    y += w
+    lab.cam.spawn( dna.prop.Fence, {
+        type: 'bottom',
+        x: x,
+        y: y,
+        w: 64,
+        h: 64,
+    })
+
+    x = 400
+    y = 400
+    lab.cam.spawn( dna.prop.Fence, {
+        type: 'top-left',
+        x: x,
+        y: y,
+        w: 128,
+        h: 128,
+    })
+    lab.cam.spawn( dna.prop.Fence, {
+        type: 'top-right',
+        x: x + 64,
+        y: y,
+        w: 128,
+        h: 128,
+    })
+    lab.cam.spawn( dna.prop.Fence, {
+        type: 'bottom-left',
+        x: x,
+        y: y + 64,
+        w: 128,
+        h: 128,
+    })
+    lab.cam.spawn( dna.prop.Fence, {
+        type: 'bottom-right',
+        x: x + 64,
+        y: y + 64,
+        w: 128,
+        h: 128,
+    })
+    
+}
+
 function setup() {
     lab.background = hsl(.05, .25, .6)
 
     createCamera()
     createHud()
     createActors()
+    createFence()
 }

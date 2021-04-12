@@ -43,30 +43,8 @@ function restoreCoords() {
 }
 
 function collide() {
-    const actor = this.__
-    if (!actor.collider) return false
-
-    const ls = actor.__._ls
-    for (let i = 0; i < ls.length; ++i) {
-        const target = ls[i]
-        if (target !== actor && !target.dead && target.collider) {
-            if (target.x - target.collider.w/2
-                    < actor.x + actor.collider.w/2
-                &&
-                    target.x + target.collider.w/2
-                        > actor.x - actor.collider.w/2
-                &&
-                    target.y - target.collider.h/2
-                        < actor.y + actor.collider.h/2
-                &&
-                    target.y + target.collider.h/2
-                        > actor.y - actor.collider.h/2
-            ) {
-                return true
-            }
-        }
-    }
-    return false
+    if (!this.__.collider) return false
+    return this.__.collider.collide()
 }
 
 function evo(dt) {
