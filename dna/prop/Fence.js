@@ -1,8 +1,8 @@
 const df = {
     x: 0,
     y: 0,
-    w: 0,
-    h: 0,
+    w: 128,
+    h: 128,
 }
 
 class Fence extends dna.Prop {
