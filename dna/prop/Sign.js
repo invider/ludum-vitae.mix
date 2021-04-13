@@ -5,10 +5,13 @@ const df = {
     h: 148,
 }
 
+let id = 0
 class Sign extends dna.Prop {
 
     constructor(st) {
-        super( augment({}, df, st) )
+        super( augment({
+            name: 'sign' + (++id)
+        }, df, st) )
 
         this.install( dna.pod.sprite, {
             img: res.signWide,
@@ -17,7 +20,7 @@ class Sign extends dna.Prop {
             dy: -64,
         })
         this.h = this.h + 128
-        this.collider.w = 118
+        this.collider.w = 128
         this.collider.h = 6
     }
 

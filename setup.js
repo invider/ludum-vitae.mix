@@ -258,6 +258,34 @@ function createSigns() {
     })
 }
 
+function createBooks() {
+    lab.cam.spawn( dna.prop.Book, {
+        x: -200,
+        y: 200,
+        title: 'Java in 21 Days',
+    })
+    lab.cam.spawn( dna.prop.Book, {
+        x: -100,
+        y: 200,
+        title: 'Something for Dummies',
+    })
+    lab.cam.spawn( dna.prop.Book, {
+        x: 0,
+        y: 200,
+        title: 'Something for Dummies',
+    })
+    lab.cam.spawn( dna.prop.Book, {
+        x: 100,
+        y: 200,
+        title: 'Something for Dummies',
+    })
+    lab.cam.spawn( dna.prop.Book, {
+        x: 200,
+        y: 200,
+        title: 'Something for Dummies',
+    })
+}
+
 function setup() {
     lab.background = hsl(.04, .20, .4)
 
@@ -267,4 +295,5 @@ function setup() {
     createRocks()
     createFence()
     createSigns()
+    createBooks()
 }

@@ -51,4 +51,13 @@ class Multipod {
             if (pod.draw) pod.draw()
         }
     }
+
+    kill() {
+        this.dead = true
+
+        const multipod = this
+        defer(() => {
+            multipod.__.detach(multipod)
+        })
+    }
 }

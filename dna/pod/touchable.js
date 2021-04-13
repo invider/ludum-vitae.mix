@@ -1,4 +1,4 @@
-const alias = 'collider'
+const alias = 'touchable'
 
 const df = {
     w: 64,
@@ -9,7 +9,7 @@ function onInstall(st) {
     augment(this, df, st)
 }
 
-function collide() {
+function touch() {
     const actor = this.__
 
     const ls = actor.__._ls
@@ -28,11 +28,14 @@ function collide() {
                     target.y + target.collider.h/2
                         > actor.y - this.h/2
             ) {
-                return true
+                this.__.touch(target)
             }
         }
     }
-    return false
+}
+
+function evo(dt) {
+    this.touch()
 }
 
 function draw() {
