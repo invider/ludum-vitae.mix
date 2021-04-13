@@ -239,6 +239,25 @@ function createRocks() {
     }
 }
 
+function createSigns() {
+    lab.cam.spawn( dna.prop.Sign, {
+        x: 20,
+        y: 540,
+        label: 'go there...',
+    })
+
+    lab.cam.spawn( dna.prop.Sign, {
+        x: 840,
+        y: 540,
+        label: '2018',
+    })
+    lab.cam.spawn( dna.prop.Sign, {
+        x: -420,
+        y: 540,
+        label: '2007',
+    })
+}
+
 function setup() {
     lab.background = hsl(.04, .20, .4)
 
@@ -247,4 +266,5 @@ function setup() {
     createActors()
     createRocks()
     createFence()
+    createSigns()
 }
