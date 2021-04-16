@@ -22,5 +22,8 @@ function setupCamera() {
             dna.SlideCamera.prototype.evo.call( this, dt )
         }
     })
+    lab.touch('fx', {
+        Z: 13,
+    })
 }
 setupCamera.Z = 1
