@@ -1,15 +1,17 @@
 function setupActors() {
-    const hero = lab.cam.spawn( dna.Actor, {
+    const mob = lab.cam.mob
+    const hero = mob.spawn( dna.Actor, {
         name: 'hero',
         x: rx(.2),
         y: ry(.2),
     })
+    _.hero = hero
     //hero.mover.speed = 80
     hero.mover.speed = 120
     lab.cam.follow( hero, true )
     lab.cam.lookAt( hero.x, hero.y )
 
-    const dude1 = lab.cam.spawn( dna.Actor, {
+    const dude1 = mob.spawn( dna.Actor, {
         name: 'dude1',
         dir: _.RIGHT,
         x: rx(.1),
@@ -18,7 +20,7 @@ function setupActors() {
     })
     dude1.install( dna.pod.randomMover )
 
-    const girl1 = lab.cam.spawn( dna.Actor, {
+    const girl1 = mob.spawn( dna.Actor, {
         name: 'girl1',
         dir: _.LEFT,
         x: ry(.9),
@@ -27,7 +29,7 @@ function setupActors() {
     })
     girl1.install( dna.pod.randomMover )
 
-    const girl2 = lab.cam.spawn( dna.Actor, {
+    const girl2 = mob.spawn( dna.Actor, {
         name: 'girl2',
         dir: _.UP,
         x: ry(.5),

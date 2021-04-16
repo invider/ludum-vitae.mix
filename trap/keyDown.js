@@ -6,7 +6,7 @@ function keyDown(e) {
     handleGlobal(e)
     if (e.repeat) return
 
-    const hero = lab.cam.hero
+    const hero = lab.cam.mob.hero
     switch(e.code) {
         case 'ArrowUp':    hero.mover.move( _.UP ); break;
         case 'ArrowLeft':  hero.mover.move( _.LEFT ); break;

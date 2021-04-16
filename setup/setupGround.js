@@ -1,5 +1,5 @@
 function gravelAt(x, y) {
-    lab.cam.spawn( dna.prop.Gravel, {
+    lab.cam.ground.spawn( dna.prop.Gravel, {
         x: x,
         y: y,
     })
