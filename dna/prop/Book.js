@@ -29,18 +29,9 @@ class Book extends dna.Prop {
         if (actor.name === 'hero') {
             // TODO skill up based on the book title/skills
             const sx = lab.cam.gx(actor.x)
-            const sy = lab.cam.gy(actor.y)
-            const txt  = lab.fx.spawn('text/fadeText', {
-                text: this.title,
-                font: '32px coolville',
-                fillStyle: '#ffffff',
-                align: 'left',
-                x: sx,
-                y: sy - actor.h * .8,
-                dx: 20,
-                dy: -20,
-                ttl: 5,
-            })
+            const sy = lab.cam.gy(actor.y - actor.h * .8)
+            lib.tfx.flyingText( this.title, sx, sy )
+            lib.fx.poof( this.x, this.y )
             this.kill()
         }
     }
