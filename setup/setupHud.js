@@ -6,6 +6,7 @@ function setupHud() {
 
     lab.hud.spawn( dna.hud.Chat, {
         name: 'chat',
+        stick: 'center',
     })
 }
 setupHud.Z = 2

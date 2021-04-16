@@ -28,11 +28,19 @@ class Chat {
     }
 
     adjust() {
+        this.w = rx( this.rw )
+        this.h = ry( this.rh )
         switch(this.stick) {
             case 'right':
-                this.w = rx( this.rw )
-                this.h = ry( this.rh )
                 this.x = rx(1) - this.w
+                this.y = ry(1) - this.h
+                break
+            case 'left':
+                this.x = 0
+                this.y = ry(1) - this.h
+                break
+            case 'center':
+                this.x = rx(.5) - this.w/2
                 this.y = ry(1) - this.h
                 break
         }
