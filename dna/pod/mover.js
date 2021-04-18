@@ -2,6 +2,7 @@ const alias = 'mover'
 
 const df = {
     speed: 50,
+    stepTime: .5,
 }
 
 function onInstall() {
@@ -15,7 +16,17 @@ function isMoving() {
     }
 }
 
+function stopAll() {
+    for (let i = 0; i < this.actuators.length; i++) {
+        this.actuators[i] = false
+    }
+}
+
 function move(action) {
+    if (!this.isMoving()) {
+        this.stepTimer = 0
+    }
+    this.stopAll()
     this.actuators[action] = true
     this.__.frames.setCycle('walk')
 }
@@ -71,5 +82,13 @@ function evo(dt) {
         actor.dir = _.RIGHT
         actor.x += this.speed * dt
         if (this.collide()) this.restoreCoords()
+    }
+
+    if (this.__.name === 'hero' && this.isMoving()) {
+        this.stepTimer -= dt
+        if (this.stepTimer < 0) {
+            this.stepTimer = this.stepTime
+            lib.sfx('step')
+        }
     }
 }
