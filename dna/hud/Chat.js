@@ -3,10 +3,15 @@ const df = {
     y: 0,
     w: 100,
     h: 100,
-    rw: .35,
+    rw: .4,
     rh: .2,
     stick: 'right',
-    padding: 5,
+    edge: {
+        top: 10,
+        left: 30,
+        right: 40,
+        bottom: 5,
+    },
 
     fontSize: 28,
     //fontFace: 'pixel-operator-mono',
@@ -30,6 +35,7 @@ class Chat {
     adjust() {
         this.w = rx( this.rw )
         this.h = ry( this.rh )
+        this.edge.bottom = 5
         switch(this.stick) {
             case 'right':
                 this.x = rx(1) - this.w
@@ -42,6 +48,12 @@ class Chat {
             case 'center':
                 this.x = rx(.5) - this.w/2
                 this.y = ry(1) - this.h
+                break
+            case 'middle':
+                this.h = this.w
+                this.x = rx(.5) - this.w/2
+                this.y = ry(.5) - this.h/2
+                this.edge.bottom = 40
                 break
         }
     }
@@ -79,12 +91,18 @@ class Chat {
     }
 
     draw() {
+        /*
         fill(this.background)
         rect(this.x, this.y, this.w, this.h)
+        */
+        blocky()
+        image(res.paper, this.x, this.y, this.w, this.w)
 
         save()
-        translate(this.x + this.padding, this.y + this.padding)
-        clip(0, 0, this.w - 2 * this.padding, this.h - 2 * this.padding)
+        translate(this.x + this.edge.left, this.y + this.edge.top)
+        const hEdge = this.edge.left + this.edge.right
+        const vEdge = this.edge.top + this.edge.bottom
+        clip(0, 0, this.w - hEdge, this.h - vEdge)
 
         const step = this.fontSize + this.lineSpacing
         font(this.fontSize + 'px ' + this.fontFace)
@@ -92,16 +110,18 @@ class Chat {
         baseBottom()
 
         let x = 0
-        let y = this.h - 2 * this.padding
+        let y = this.h - vEdge
 
-        fill(.55, .5, .5)
+        //fill(.55, .5, .5)
+        fill('#000000')
         const cursor = this.blinkTimer < 0? '' : this.cursor
         text(this.cmd + cursor, x, y)
         y -= step
 
-        fill(.25, .5, .5)
+        //fill(.25, .5, .5)
+        fill('#000000')
         let i = this.log.length - 1
-        while(i >= 0 && y > 0) {
+        while(i >= 0 && y > step) {
             const line = this.log[i--]
             text(line, x, y)
             y -= step
