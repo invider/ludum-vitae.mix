@@ -67,6 +67,6 @@ function draw() {
         baseBottom()
         alignCenter()
         fill(.13, .5, .5)
-        text('#' + tilex, x, y)
+        text('timer:' + floor(this.timer * 100), x, y)
     }
 }

@@ -16,7 +16,7 @@ function isMoving() {
     }
 }
 
-function stopAll() {
+function resetAll() {
     for (let i = 0; i < this.actuators.length; i++) {
         this.actuators[i] = false
     }
@@ -26,7 +26,7 @@ function move(action) {
     if (!this.isMoving()) {
         this.stepTimer = 0
     }
-    this.stopAll()
+    this.resetAll()
     this.actuators[action] = true
     this.__.frames.setCycle('walk')
 }
@@ -37,9 +37,7 @@ function stop(action) {
 }
 
 function stopAll() {
-    for (let i = 0; i < this.actuators.length; i++) {
-        this.actuators[i] = false
-    }
+    this.resetAll()
     this.__.frames.setCycle('idle')
 }
 
