@@ -25,7 +25,7 @@ const df = {
     background: '#000000A0',
 
     typing: false,
-    typeSpeed: 4,
+    typeSpeed: 16,
     typeTimer: 0,
 }
 
@@ -33,6 +33,7 @@ class Chat {
 
     constructor(st) {
         this.log = []
+        this.style = []
         this.buffer = []
         this.cmd = ''
         augment(this, df, st)
@@ -76,7 +77,9 @@ class Chat {
     }
 
     sayIt() {
+        // TODO interpret the command
         this.log.push(this.cmd)
+        this.style[ this.log.length - 1 ] = env.style.chat.user
         this.cmd = ''
     }
 
@@ -163,7 +166,7 @@ class Chat {
         let y = this.h - vEdge
 
         //fill(.55, .5, .5)
-        fill('#000000')
+        fill( env.style.chat.user )
         if (this.disabled) {
             if (this.cmd.length > 0) {
                 text(this.cmd, x, y)
@@ -176,10 +179,11 @@ class Chat {
         }
 
         //fill(.25, .5, .5)
-        fill('#000000')
         let i = this.log.length - 1
         while(i >= 0 && y > step) {
+            const style = this.style[i] || fill( env.style.chat.bot )
             const line = this.log[i--]
+            fill(style)
             text(line, x, y)
             y -= step
         }
