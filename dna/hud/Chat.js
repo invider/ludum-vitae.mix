@@ -22,13 +22,18 @@ const df = {
     cursor: '_',
     blinkPeriod: .5,
     blinkTimer: 0,
-    background: '#000000A0'
+    background: '#000000A0',
+
+    typing: false,
+    typeSpeed: 4,
+    typeTimer: 0,
 }
 
 class Chat {
 
     constructor(st) {
         this.log = []
+        this.buffer = []
         this.cmd = ''
         augment(this, df, st)
     }
@@ -59,6 +64,17 @@ class Chat {
         }
     }
 
+    // terminal-type provided text
+    typeIt(txt, enable) {
+        if (!txt) return
+        const bufExt = txt.split('')
+        this.buffer = this.buffer.concat( bufExt )
+        this.log.push('')
+        this.disabled = !enable
+        this.typing = true
+        this.typeTimer = 0
+    }
+
     sayIt() {
         this.log.push(this.cmd)
         this.cmd = ''
@@ -74,16 +90,45 @@ class Chat {
         if (e.keyCode === 13) {
             // handle Enter
             this.sayIt()
+            lib.sfx('enter')
+
         } else if (e.keyCode === 8) {
             // handle Backspace
             if (this.cmd.length > 0) {
                 this.cmd = this.cmd.substring(0, this.cmd.length - 1)
+                lib.sfx('backspace')
             }
+
         } else if (e.key.length === 1) {
             // handle a character
             this.cmd = this.cmd + e.key
+            lib.sfx('type')
         }
         this.blinkTimer = this.blinkPeriod
+    }
+
+    out(c) {
+        if (c === '\n') {
+            this.log.push('')
+        } else {
+            const cur = this.log.pop()
+            this.log.push(cur + c)
+        }
+    }
+
+    evoTyping(dt) {
+        this.typeTimer -= dt
+        if (this.typeTimer < 0) {
+            this.typeTimer += 1/this.typeSpeed
+
+            if (this.buffer.length === 0) {
+                // no more buffered output
+                this.typing = false
+                this.disabled = false
+            } else {
+                this.out( this.buffer.shift() )
+            }
+        }
     }
 
     evo(dt) {
@@ -91,6 +136,8 @@ class Chat {
         if (this.blinkTimer < -this.blinkPeriod) {
             this.blinkTimer = this.blinkPeriod
         }
+
+        if (this.typing) this.evoTyping(dt)
     }
 
     draw() {
