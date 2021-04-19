@@ -18,6 +18,7 @@ const df = {
     fontFace: 'coolville',
     lineSpacing: 1,
 
+    disabled: false,
     cursor: '_',
     blinkPeriod: .5,
     blinkTimer: 0,
@@ -68,6 +69,8 @@ class Chat {
     }
 
     onKeyDown(e) {
+        if (this.disabled) return
+
         if (e.keyCode === 13) {
             // handle Enter
             this.sayIt()
@@ -114,9 +117,16 @@ class Chat {
 
         //fill(.55, .5, .5)
         fill('#000000')
-        const cursor = this.blinkTimer < 0? '' : this.cursor
-        text(this.cmd + cursor, x, y)
-        y -= step
+        if (this.disabled) {
+            if (this.cmd.length > 0) {
+                text(this.cmd, x, y)
+                y -= step
+            }
+        } else {
+            const cursor = this.blinkTimer < 0? '' : this.cursor
+            text(this.cmd + cursor, x, y)
+            y -= step
+        }
 
         //fill(.25, .5, .5)
         fill('#000000')
