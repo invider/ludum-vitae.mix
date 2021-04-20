@@ -1,6 +1,7 @@
 const ID = 1
 const STRING = 2
-const SPECIAL = 3
+const NUMBER = 3
+const SPECIAL = 7
 const NL = 9
 
 function type2str(type) {
@@ -8,6 +9,7 @@ function type2str(type) {
     switch(type) {
         case ID:       s = 'id'; break;
         case STRING:   s = 'string'; break;
+        case NUMBER:   s = 'number'; break;
         case SPECIAL:  s = 'special'; break;
         case NL:       s = 'new-line'; break;
     }
@@ -18,20 +20,24 @@ function token(type, val, opt) {
     const t = {
         type: type,
         toString: function() {
-            return (type2str(this.type)
-                + (this.val? `:[${this.val}]` : '')
-                + (this.opt? `(${this.opt})`  : '')
-            )
+            switch(this.type) {
+                case NL:      return '~\n';
+                case ID:      return `[${this.val}]`;
+                case NUMBER:  return this.val;
+                case STRING:  return `"${this.val}"`;
+                case SPECIAL: return `{${this.val}}`;
+                default:
+                    return (type2str(this.type)
+                        + (this.val? `:[${this.val}]` : '')
+                        + (this.opt? `(${this.opt})`  : '')
+                    )
+            }
         }
     }
     if (val) t.val = val
     if (opt) t.opt = opt
 
     return t
-}
-
-function lexError(msg) {
-    return `Error ${line}:${linePos}: ${msg}`
 }
 
 function isWhitespace(c) {
@@ -46,12 +52,26 @@ function isSeparator(c) {
     return isWhitespace(c) || isNewLine(c)
 }
 
+function isSpecial(c) {
+    return (
+           c === '#'
+        || c === ':'
+        || c === '.'
+        || c === '!'
+        || c === '*'
+        || c === '-'
+    )
+}
+
 function isDigit(c) {
-    if (isString(c)) return false
+    if (!isString(c)) return false
     const code = c.charCodeAt(0) - 48
     return (code >= 0 && code < 10)
 }
 
+function toDigit(c) {
+    return c.charCodeAt(0) - 48
+}
 
 function lex(src) {
     src = src || ''
@@ -60,6 +80,10 @@ function lex(src) {
     let pos = 0
     let line = 0
     let linePos = 0
+
+    function lexError(msg) {
+        throw `LV Script Error @${(line+1)}:${(linePos+1)}: ${msg}`
+    }
 
     function aheadc() {
         return input[pos]
@@ -83,6 +107,10 @@ function lex(src) {
         return c
     }
 
+    function skipc() {
+        getc()
+    }
+
     function retc() {
         if (pos > 0) pos--
     }
@@ -96,9 +124,9 @@ function lex(src) {
     }
 
     function skipComments(c) {
-        if (c === '#' || ( c === '-' && aheadc() === '-')) {
+        while ( c === '-' && aheadc() === '-') {
             // the start of a comment
-            return skipLine(c)
+            c = skipLine(c)
         }
         return c
     }
@@ -120,27 +148,46 @@ function lex(src) {
         return token( STRING, valArr.join('') )
     }
 
+    function consumeNumber(c) {
+        let val = toDigit(c)
+
+        c = aheadc()
+        while ( isDigit(c) ) {
+            val = (val * 10) + toDigit(c)
+            skipc()
+            c = aheadc()
+        }
+
+        return token( NUMBER, val )
+    }
+
+    function consumeId(c) {
+        const valArr = [ c ]
+
+        c = aheadc()
+        while (c && !isSeparator(c)) {
+            valArr.push(c)
+            skipc()
+            c = aheadc()
+        }
+        return token( ID, valArr.join('') )
+    }
+
     // return the next token
     function next() {
         let c = getc()
 
         c = skipComments(c)
         c = skipWhitespaces(c)
-        if ( isNewLine(c) ) return token(NL)
-
         if (!c) return null
 
+        if ( isNewLine(c) ) return token(NL)
+        if ( isSpecial(c) ) return token(SPECIAL, c)
+
         if (c === '"') return consumeString()
+        if ( isDigit(c) ) return consumeNumber(c)
 
-        // got an ID
-        const valArr = [ c ]
-
-        c = getc()
-        while (c && !isSeparator(c)) {
-            valArr.push(c)
-            c = getc()
-        }
-        return token( ID, valArr.join('') )
+        return consumeId(c)
     }
 
     return {

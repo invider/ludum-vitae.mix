@@ -1,6 +1,41 @@
--- first comment
 some text
--- the second comment
 ludum dare 48
 "a test string maybe?"
     and "another string"
+
+----------------------------
+2020:
+
+-- first comment
+-- second comment
+
+-- horizontal x anchor by defining the year width
+-- everything inside is going to be in that year's coordinate system
+-- SKIP THIS!!!!
+
+-- place objects...
+-- place talk triggers
+-- place local quotes
+
+
+-- place books and items...
+
+-- books are placed randomly?
+books:
+    * Java in 21 Days
+    * C++ in 24 Hours
+    * Haskell for Dummies
+
+
+
+----------------------------
+2019:
+
+
+----------------------------
+2012:
+
+
+----------------------------
+2007:
+
