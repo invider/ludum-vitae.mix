@@ -3,6 +3,7 @@ const MAX_TOKENS = 65536
 function parse(src) {
     const tokenizer = dna.script.lex(src)
 
+    log('\n\n\n====================================\n')
     let token = tokenizer.next()
     let tokenCounter = 0
     while(token && tokenCounter < MAX_TOKENS) {
@@ -10,6 +11,7 @@ function parse(src) {
         token = tokenizer.next()
         tokenCounter ++
     }
+    log('====================================\n')
 
     return '!!!\n' + src
 }
