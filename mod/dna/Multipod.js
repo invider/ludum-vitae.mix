@@ -50,6 +50,14 @@ class Multipod {
         for (let pod of this.pods) {
             if (pod.draw) pod.draw()
         }
+
+        if (this.debug) {
+            const x = this.x - this.w/2
+            const y = this.y - this.h/2
+            lineWidth(2)
+            stroke(.01, .5, .4)
+            rect(x, y, this.w, this.h)
+        }
     }
 
     kill() {

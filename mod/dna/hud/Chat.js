@@ -68,12 +68,16 @@ class Chat {
     // terminal-type provided text
     typeIt(txt, enable) {
         if (!txt) return
+        if (isArray(txt)) {
+            txt = txt.join('\n')
+        }
         const bufExt = txt.split('')
         this.buffer = this.buffer.concat( bufExt )
         this.log.push('')
         this.disabled = !enable
         this.typing = true
         this.typeTimer = 0
+        lib.sfx('message')
     }
 
     sayIt() {

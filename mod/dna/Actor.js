@@ -24,4 +24,8 @@ class Actor extends dna.Multipod {
         this.install( dna.pod.collider )
         this.install( dna.pod.mover )
     }
+
+    say(lines) {
+        lab.hud.chat.typeIt(lines)
+    }
 }

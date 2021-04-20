@@ -47,9 +47,36 @@ function createBooks() {
     })
 }
 
+function createAreas() {
+    const mob = lab.cam.mob
+
+    mob.spawn( dna.prop.ActiveArea, {
+        x: 500,
+        y: 200,
+        w: 400,
+        h: 500,
+        lines: [
+            'hi there!',
+            'glad to see ya!',
+        ]
+    })
+
+    mob.spawn( dna.prop.ActiveArea, {
+        x: -100,
+        y: 200,
+        w: 400,
+        h: 500,
+        lines: [
+            "Hi!",
+            "I'm Igorbot",
+        ],
+    })
+}
+
 function setupItems() {
     createSigns()
     createBooks()
+    createAreas()
     // ...
 }
 setupItems.Z = 13

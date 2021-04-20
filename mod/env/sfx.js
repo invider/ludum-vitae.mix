@@ -20,6 +20,10 @@ module.exports = {
         res: 'step1',
         vol: .5,
     },
+    message: {
+        res: 'message',
+        vol: .8,
+    },
 
     default: {
         vol: .7,
