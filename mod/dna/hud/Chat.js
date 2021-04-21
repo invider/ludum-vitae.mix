@@ -65,6 +65,14 @@ class Chat {
         }
     }
 
+    voiceIt(txt) {
+        const utterance = new SpeechSynthesisUtterance(txt);
+        //utterance.pitch = .24
+        //log('pitch: ' + utterance.pitch)
+        if (env.voice) utterance.voice = env.voice
+        speechSynthesis.speak(utterance);
+    }
+
     // terminal-type provided text
     typeIt(txt, enable) {
         if (!txt) return
@@ -77,7 +85,11 @@ class Chat {
         this.disabled = !enable
         this.typing = true
         this.typeTimer = 0
+
         lib.sfx('message')
+        this.voiceIt(txt)
+
+        return ceil(txt.length / this.typeSpeed)
     }
 
     sayIt() {

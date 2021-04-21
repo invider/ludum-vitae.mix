@@ -11,6 +11,19 @@ function burns() {
     console.dir( doc.json() )
 }
 
+
+function setupVoiceSynth() {
+    const synth = window.speechSynthesis;
+    synth.onvoiceschanged = () => {
+        console.warn('voices are ready',window.speechSynthesis.getVoices());
+        synth.getVoices().forEach(voice => {
+            if (voice.name.includes("UK English Male")) {
+                env.voice = voice
+            }
+        })
+    }
+}
+
 function setupNLP() {
     log('======= COMPROMISE =======')
 
@@ -25,5 +38,7 @@ function setupNLP() {
     //console.dir(statement)
     
     burns()
+
+    setupVoiceSynth()
 }
 

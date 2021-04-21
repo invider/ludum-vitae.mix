@@ -7,6 +7,7 @@ const df = {
     w: 128,
     h: 128,
     dir: _.DOWN,
+    blinkTimer: 0,
 }
 
 let id = 0
@@ -26,6 +27,49 @@ class Actor extends dna.Multipod {
     }
 
     say(lines) {
-        lab.hud.chat.typeIt(lines)
+        const blinkTime = lab.hud.chat.typeIt(lines)
+        this.blinkTimer += blinkTime + env.tune.talkIconDelay
+
+        //const utterance = new SpeechSynthesisUtterance("Hello world");
+        //speechSynthesis.speak(utterance);
+
+        /*
+        let utterance = new SpeechSynthesisUtterance("Hello world!");
+        utterance.pitch = 0
+        utterance.volume = 0
+        utterance.rate = 0
+        speechSynthesis.speak(utterance);
+
+        utterance.onerror = function (event) {
+            console.error('SpeechSynthesisUtterance.onerror');
+        }
+        */
+    }
+
+    evoBlinker(dt) {
+        if (this.blinkTimer > 0) {
+            this.blinkTimer -= dt
+            if (this.blinkTimer <= 0) {
+                this.blinkTimer = 0
+            }
+        }
+    }
+
+    evo(dt) {
+        super.evo(dt)
+        this.evoBlinker(dt)
+    }
+
+    drawBlinker() {
+        const r = this.w/2
+        const x = this.x + r * .2
+        const y = this.y - this.h * 1.2
+        image(res.icon.talk, x, y, r, r)
+    }
+
+    draw() {
+        super.draw()
+
+        if (this.blinkTimer > 0) this.drawBlinker()
     }
 }
