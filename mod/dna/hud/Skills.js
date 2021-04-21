@@ -56,9 +56,30 @@ class Skills {
             alpha(this.fadeOut/this.fadeTime)
         }
 
-        blocky()
-        image(res.paper, this.x, this.y, this.w, this.w)
+        translate(this.x, this.y)
+        clip(0, 0, this.w, this.w)
 
+        blocky()
+        image(res.paper, 0, 0, this.w, this.w)
+
+        fill( env.style.chat.bot )
+        font('32px coolville')
+        baseTop()
+        alignCenter()
+
+        text('skills', this.w/2, 30)
+
+        alignLeft()
+        const step = 25
+        let x = 40
+        let y = 70
+
+        const skills = _.hero.skillChart.getSkills()
+        Object.keys(skills).forEach(skill => {
+            const points = skills[skill]
+            text(`${skill}: ${points}`, x, y)
+            y += step
+        })
         restore()
     }
 }

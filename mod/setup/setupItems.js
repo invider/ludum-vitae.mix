@@ -24,26 +24,41 @@ function createBooks() {
         x: -200,
         y: 200,
         title: 'Java in 21 Days',
+        skills: {
+            java: 3,
+        },
     })
     mob.spawn( dna.prop.Book, {
         x: -100,
         y: 200,
         title: 'Something for Dummies',
+        skills: {
+            java: 1,
+        },
     })
     mob.spawn( dna.prop.Book, {
         x: 0,
         y: 200,
         title: 'Something for Dummies',
+        skills: {
+            java: 1,
+        },
     })
     mob.spawn( dna.prop.Book, {
         x: 100,
         y: 200,
         title: 'Something for Dummies',
+        skills: {
+            java: 1,
+        },
     })
     mob.spawn( dna.prop.Book, {
         x: 200,
         y: 200,
         title: 'Something for Dummies',
+        skills: {
+            java: 1,
+        },
     })
 }
 
@@ -57,7 +72,7 @@ function createAreas() {
         h: 500,
         lines: [
             'hi there!',
-            'glad to see ya!',
+            'glad to see you!',
         ]
     })
 
@@ -68,7 +83,7 @@ function createAreas() {
         h: 500,
         lines: [
             "Hi!",
-            "I'm Igorbot",
+            "I'm Igobot",
         ],
     })
 }

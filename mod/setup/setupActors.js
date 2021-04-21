@@ -5,6 +5,7 @@ function setupActors() {
         x: rx(.2),
         y: ry(.2),
     })
+    hero.install( dna.pod.skillChart )
     _.hero = hero
     //hero.mover.speed = 80
     hero.mover.speed = 120

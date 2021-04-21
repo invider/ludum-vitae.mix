@@ -26,7 +26,10 @@ class Book extends dna.Prop {
     }
 
     pick(actor) {
-        // TODO skill up based on the book title/skills
+        if (this.skills) {
+            actor.skillChart.skillUp( this.skills )
+        }
+
         const sx = lab.cam.gx(actor.x)
         const sy = lab.cam.gy(actor.y - actor.h * .8)
         lib.tfx.flyingText( this.title, sx, sy )
@@ -36,7 +39,7 @@ class Book extends dna.Prop {
     }
 
     touch(actor) {
-        if (actor.name === 'hero') {
+        if (actor.skillChart) {
             this.pick(actor)
         }
     }

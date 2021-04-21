@@ -68,6 +68,7 @@ class Chat {
     voiceIt(txt) {
         const utterance = new SpeechSynthesisUtterance(txt);
         utterance.pitch = 1.5
+        utterance.rate = 1.3
         if (env.voice) utterance.voice = env.voice
         speechSynthesis.speak(utterance);
     }
