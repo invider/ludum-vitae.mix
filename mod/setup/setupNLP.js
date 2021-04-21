@@ -15,9 +15,10 @@ function burns() {
 function setupVoiceSynth() {
     const synth = window.speechSynthesis;
     synth.onvoiceschanged = () => {
-        console.warn('voices are ready',window.speechSynthesis.getVoices());
+        console.dir('voices are ready',window.speechSynthesis.getVoices());
         synth.getVoices().forEach(voice => {
             if (voice.name.includes("UK English Male")) {
+            //if (voice.name.includes("US English")) {
                 env.voice = voice
             }
         })

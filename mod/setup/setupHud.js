@@ -8,5 +8,9 @@ function setupHud() {
         name: 'chat',
         stick: 'center',
     })
+
+    lab.hud.spawn( dna.hud.Skills, {
+        name: 'skills',
+    })
 }
 setupHud.Z = 2
