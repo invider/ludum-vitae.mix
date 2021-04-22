@@ -1,3 +1,4 @@
+/*
 function hfence(x, y, w, n) {
     for (let i = 0; i < n; i++) {
         lab.cam.mob.spawn( dna.prop.Fence, {
@@ -59,3 +60,4 @@ function setupFence() {
     })
 }
 setupFence.Z = 12
+*/

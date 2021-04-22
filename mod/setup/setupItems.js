@@ -9,7 +9,9 @@ function createSigns() {
     mob.spawn( dna.prop.Sign, {
         x: 840,
         y: 540,
+        dx: 10,
         label: '2018',
+        img: res.signLeft,
     })
     mob.spawn( dna.prop.Sign, {
         x: -420,
@@ -89,7 +91,7 @@ function createAreas() {
 }
 
 function setupItems() {
-    createSigns()
+    //createSigns()
     createBooks()
     createAreas()
     // ...

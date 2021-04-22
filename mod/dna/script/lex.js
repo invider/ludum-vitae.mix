@@ -81,7 +81,7 @@ function lex(src) {
     let line = 0
     let linePos = 0
 
-    function lexError(msg) {
+    function error(msg) {
         throw `LV Script Error @${(line+1)}:${(linePos+1)}: ${msg}`
     }
 
@@ -144,7 +144,7 @@ function lex(src) {
             valArr.push(c)
             c = getc()
         }
-        if (!c) lexError('unexpected end of the stream - ["] is expected!')
+        if (!c) error('unexpected end of the stream - ["] is expected!')
         return token( STRING, valArr.join('') )
     }
 
@@ -193,9 +193,11 @@ function lex(src) {
     return {
         ID,
         STRING,
+        NUMBER,
         SPECIAL,
         NL,
 
         next,
+        error,
     }
 }

@@ -3,6 +3,7 @@ const df = {
     y: 0,
     w: 148,
     h: 148,
+    dx: 0,
 }
 
 let id = 0
@@ -14,7 +15,7 @@ class Sign extends dna.Prop {
         }, df, st) )
 
         this.install( dna.pod.sprite, {
-            img: res.signWide,
+            img: st.img || res.signWide,
             w: this.w,
             h: this.h,
             dy: -64,
@@ -31,6 +32,6 @@ class Sign extends dna.Prop {
         font(env.style.signFont)
         alignCenter()
         baseMiddle()
-        text(this.label, this.x, this.y - 88)
+        text(this.label, this.x + this.dx, this.y - 88)
     }
 }

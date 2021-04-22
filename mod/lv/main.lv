@@ -1,10 +1,20 @@
-some text
-ludum dare 48
-"a test string maybe?"
-    and "another string"
 
-----------------------------
-2020:
+==== 2021 The Best Year Ever! ====
+
+books:
+    * Java in 21 Days
+    * C++ in 24 Hours
+    * Haskell for Dummies
+
+
+==== 2020 The Worst Year Ever! ===
+
+books:
+    * How to Survive in Post-Appocalyptic World
+
+
+==== 2019 ====
+
 
 -- first comment
 -- second comment
@@ -21,11 +31,6 @@ ludum dare 48
 -- place books and items...
 
 -- books are placed randomly?
-books:
-    * Java in 21 Days
-    * C++ in 24 Hours
-    * Haskell for Dummies
-
 
 
 ----------------------------
