@@ -1,7 +1,7 @@
 const df = {
     hidden: true,
-    rw: .5,
-    rh: .5,
+    rw: .7,
+    rh: .7,
     fadeTime: .5,
 }
 
@@ -13,19 +13,23 @@ class Skills {
     adjust() {
         this.w = rx( this.rw )
         this.h = ry( this.rh )
+        if (this.h < this.w) this.w = this.h
+
         this.x = rx(.5) - this.w/2
-        this.y = ry(.4) - this.h/2
+        this.y = ry(.5) - this.w/2
     }
 
     show() {
         this.hidden = false
         this.fadeIn = this.fadeTime
         _.hero.mover.disable()
+        lab.hud.chat.disable()
     }
 
     hide() {
         this.fadeOut = this.fadeTime
         _.hero.mover.enable()
+        lab.hud.chat.enable()
     }
 
     touch() {

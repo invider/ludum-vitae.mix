@@ -113,15 +113,24 @@ class Chat {
             fn(this, args, line)
         } else {
             this.print(`unknown command "${cmd}"`)
-
         }
     }
 
     sayIt() {
+        // echo the input
         this.log.push(this.cmd)
         this.style[ this.log.length - 1 ] = env.style.chat.user
-        // TODO interpret the command
-        if (this.cmd.startsWith('\\')) this.handleCommand(this.cmd)
+        if (this.cmd.startsWith('\\')) {
+            this.handleCommand(this.cmd)
+        } else {
+            const phrase = this.cmd.toLowerCase()
+
+            if (phrase.includes('bye')) {
+                this.typeIt('See ya!')
+            } else {
+                this.typeIt('I have no idea!')
+            }
+        }
         this.cmd = ''
     }
 
@@ -231,5 +240,13 @@ class Chat {
         }
 
         restore()
+    }
+
+    enable() {
+        this.disabled = false
+    }
+
+    disable() {
+        this.disabled = true
     }
 }
