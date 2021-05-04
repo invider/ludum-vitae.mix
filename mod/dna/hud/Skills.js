@@ -20,10 +20,12 @@ class Skills {
     show() {
         this.hidden = false
         this.fadeIn = this.fadeTime
+        _.hero.mover.disable()
     }
 
     hide() {
         this.fadeOut = this.fadeTime
+        _.hero.mover.enable()
     }
 
     touch() {

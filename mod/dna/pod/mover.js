@@ -22,6 +22,15 @@ function resetAll() {
     }
 }
 
+function disable() {
+    this.__.disabled = true
+    this.resetAll()
+}
+
+function enable() {
+    this.__.disabled = false
+}
+
 function move(action) {
     if (!this.isMoving()) {
         this.stepTimer = 0
@@ -59,8 +68,9 @@ function collide() {
 function evo(dt) {
     // movement
     const actor = this.__
-    this.saveCoords()
+    if (actor.disabled) return
 
+    this.saveCoords()
     if (this.actuators[ _.UP ]) {
         actor.dir = _.UP
         actor.y -= this.speed * dt
