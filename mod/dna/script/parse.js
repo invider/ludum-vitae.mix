@@ -45,6 +45,7 @@ function parse(src) {
 
     function declareMainSection() {
         const name = expectValue()
+        log('SECTION::: ' + name)
         skipLine()
 
         // determine the container for section declaration

@@ -14,9 +14,9 @@ function setupLV() {
         mob.spawn( dna.prop.Sign, {
             x: baseX,
             y: baseY,
-            dx: 10,
+            dx: -10,
             label: section.name,
-            img: res.signLeft,
+            img: res.signRight,
         })
 
         // build the outer fence

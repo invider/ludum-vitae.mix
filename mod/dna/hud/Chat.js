@@ -65,6 +65,15 @@ class Chat {
         }
     }
 
+    print(msg, style) {
+        if (!isString(msg)) return
+
+        this.log.push(msg)
+        if (style) {
+            this.style[ this.log.length - 1 ] = style 
+        }
+    }
+
     voiceIt(txt) {
         const utterance = new SpeechSynthesisUtterance(txt);
         utterance.pitch = 1.5
@@ -92,10 +101,24 @@ class Chat {
         return ceil(txt.length / this.typeSpeed)
     }
 
+    handleCommand(line) {
+        line = line.substring(1)
+        const args = line.split(' ')
+        const cmd = args[0]
+        const fn = dna.cmd[cmd]
+        if (fn) {
+            fn(this, args, line)
+        } else {
+            this.print(`unknown command "${cmd}"`)
+
+        }
+    }
+
     sayIt() {
-        // TODO interpret the command
         this.log.push(this.cmd)
         this.style[ this.log.length - 1 ] = env.style.chat.user
+        // TODO interpret the command
+        if (this.cmd.startsWith('\\')) this.handleCommand(this.cmd)
         this.cmd = ''
     }
 

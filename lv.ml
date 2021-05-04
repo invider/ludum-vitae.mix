@@ -1,4 +1,4 @@
-> smarter skills table placement
+> smarter placement of the skills table
 > +X skills floating text hints
 > proper line formatting in the chat
 >>> .lv script
