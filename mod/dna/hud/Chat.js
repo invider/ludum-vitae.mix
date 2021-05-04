@@ -5,6 +5,7 @@ const df = {
     h: 100,
     rw: .4,
     rh: .2,
+    minWidth: 600,
     stick: 'right',
     edge: {
         top: 10,
@@ -41,6 +42,8 @@ class Chat {
 
     adjust() {
         this.w = rx( this.rw )
+        if (this.w < this.minWidth) this.w = this.minWidth
+        if (this.w > ctx.width) this.w = ctx.width
         this.h = ry( this.rh )
         this.edge.bottom = 5
         switch(this.stick) {
