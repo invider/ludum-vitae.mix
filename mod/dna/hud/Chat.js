@@ -194,6 +194,37 @@ class Chat {
         if (this.typing) this.evoTyping(dt)
     }
 
+    renderLine(line, x, y, width, step) {
+        const words = line.split(' ')
+        const splits = []
+
+        let cx = x
+        let curLine = ''
+        const spaceWidth = textWidth(' ')
+        for (const word of words) {
+            const wordWidth = textWidth(word)
+            cx += wordWidth
+            if (cx > width) {
+                splits.push(curLine + ' ')
+                curLine = word + ' '
+                cx = x + wordWidth + spaceWidth
+            } else {
+                curLine += word + ' '
+                cx += spaceWidth
+            }
+        }
+        if (curLine.length > 0) splits.push(curLine)
+
+        let yshift = 0
+        for (let i = splits.length - 1; i >= 0; i--) {
+            const subline = splits[i]
+            text(subline, x, y)
+            y -= step
+            yshift += step
+        }
+        return yshift
+    }
+
     draw() {
         /*
         fill(this.background)
@@ -206,7 +237,8 @@ class Chat {
         translate(this.x + this.edge.left, this.y + this.edge.top)
         const hEdge = this.edge.left + this.edge.right
         const vEdge = this.edge.top + this.edge.bottom
-        clip(0, 0, this.w - hEdge, this.h - vEdge)
+        const width = this.w - hEdge
+        clip(0, 0, width, this.h - vEdge)
 
         const step = this.fontSize + this.lineSpacing
         font(this.fontSize + 'px ' + this.fontFace)
@@ -220,13 +252,15 @@ class Chat {
         fill( env.style.chat.user )
         if (this.disabled) {
             if (this.cmd.length > 0) {
-                text(this.cmd, x, y)
-                y -= step
+                //text(this.cmd, x, y)
+                //y -= step
+                y -= this.renderLine(this.cmd, x, y, width, step)
             }
         } else {
             const cursor = this.blinkTimer < 0? '' : this.cursor
-            text(this.cmd + cursor, x, y)
-            y -= step
+            y -= this.renderLine(this.cmd + cursor, x, y, width, step)
+            //text(this.cmd + cursor, x, y)
+            //y -= step
         }
 
         //fill(.25, .5, .5)
@@ -235,8 +269,9 @@ class Chat {
             const style = this.style[i] || fill( env.style.chat.bot )
             const line = this.log[i--]
             fill(style)
-            text(line, x, y)
-            y -= step
+            y -= this.renderLine(line, x, y, width, step)
+            //text(line, x, y)
+            //y -= step
         }
 
         restore()

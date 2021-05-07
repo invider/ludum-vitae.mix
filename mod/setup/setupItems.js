@@ -68,9 +68,10 @@ function createAreas() {
     const mob = lab.cam.mob
 
     mob.spawn( dna.prop.ActiveArea, {
-        x: 500,
+        //debug: true,
+        x: 400,
         y: 200,
-        w: 400,
+        w: 600,
         h: 500,
         lines: [
             'hi there!',
