@@ -190,6 +190,18 @@ function lex(src) {
         return consumeId(c)
     }
 
+    function stringUntil(stopChar) {
+        const valArr = []
+
+        let c = getc()
+        while (c && c !== stopChar && !isNewLine(c)) {
+            valArr.push(c)
+            c = getc()
+        }
+        if (c) retc()
+        return token( STRING, valArr.join('') )
+    }
+
     return {
         ID,
         STRING,
@@ -199,5 +211,6 @@ function lex(src) {
 
         next,
         error,
+        stringUntil,
     }
 }

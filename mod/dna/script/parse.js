@@ -43,8 +43,20 @@ function parse(src) {
         }
     }
 
-    function declareMainSection() {
-        const name = expectValue()
+    function matchSeries(token, base) {
+        if (token.type !== lex.ID) return 0
+
+        let count = 0
+        token.val.split('').forEach(ch => {
+            if (ch === base) count ++
+        })
+        if (count === token.val.length) return count
+        else return 0
+    }
+
+    function declareMainSection(level) {
+        const name = lex.stringUntil('=')
+        if (name) name.val = name.val.trim()
         log('SECTION::: ' + name)
         skipLine()
 
@@ -54,7 +66,8 @@ function parse(src) {
 
         const newSection = {
             __: parent,
-            name: name,
+            level: level,
+            name: name.val,
             ls: [],
         }
         parent.ls.push(newSection)
@@ -66,8 +79,9 @@ function parse(src) {
         let token = lex.next()
         if (!token) return null
 
-        if (token.type === lex.ID && token.val === '====') {
-            return declareMainSection()
+        const series = matchSeries(token, '=')
+        if (series > 0) {
+            return declareMainSection(min(5-series, 1), token)
 
         } else {
             //log( '' + token )
