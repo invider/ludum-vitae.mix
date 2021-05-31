@@ -34,8 +34,8 @@ function token(type, val, opt) {
             }
         }
     }
-    if (val) t.val = val
-    if (opt) t.opt = opt
+    if (val !== undefined) t.val = val
+    if (opt !== undefined) t.opt = opt
 
     return t
 }
@@ -59,6 +59,7 @@ function isSpecial(c) {
         || c === '.'
         || c === '!'
         || c === '*'
+        || c === '+'
         || c === '-'
     )
 }
@@ -174,7 +175,7 @@ function lex(src) {
     }
 
     // return the next token
-    function next() {
+    function nextToken() {
         let c = getc()
 
         c = skipComments(c)
@@ -190,7 +191,7 @@ function lex(src) {
         return consumeId(c)
     }
 
-    function stringUntil(stopChar) {
+    function stringUntilToken(stopChar) {
         const valArr = []
 
         let c = getc()
@@ -202,6 +203,34 @@ function lex(src) {
         return token( STRING, valArr.join('') )
     }
 
+    let bufToken
+    let isBuffered = false
+    function next() {
+        if (isBuffered) {
+            isBuffered = false
+            return bufToken
+        } else {
+            bufToken = nextToken()
+            return bufToken
+        }
+    }
+
+    function stringUntil(ch) {
+        if (isBuffered) {
+            isBuffered = false
+            return bufToken
+        } else {
+            bufToken = stringUntilToken(ch)
+            return bufToken
+        }
+    }
+
+    function ret() {
+        if (isBuffered) throw 'token buffer overflow!'
+        isBuffered = true
+    }
+
+
     return {
         ID,
         STRING,
@@ -210,6 +239,7 @@ function lex(src) {
         NL,
 
         next,
+        ret,
         error,
         stringUntil,
     }

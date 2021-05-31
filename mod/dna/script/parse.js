@@ -9,6 +9,23 @@ function parse(src) {
 
     let section = lv
 
+    function expectId() {
+        const token = lex.next()
+        if (!token || (token.type !== lex.ID)) {
+            lex.error('id is expected')
+        }
+        return token.val
+    }
+
+    function expectClassifier() {
+        const token = lex.next()
+        if (!token || (token.type !== lex.ID
+                    && token.type !== lex.STRING)) {
+            lex.error('classifier is expected')
+        }
+        return token.val
+    }
+
     function expectValue() {
         const token = lex.next()
         if (!token || (token.type !== lex.ID
@@ -35,10 +52,17 @@ function parse(src) {
         return token.val
     }
 
+    function matchSpecial(ch) {
+        const token = lex.next()
+        if (!token) return
+        if (token.type === lex.SPECIAL && token.val === ch) return token
+        else lex.ret()
+    }
+
     function skipLine() {
         let token = lex.next()
         while (token && token.type !== lex.NL) {
-            log('SKIPPING ' + token.val)
+            //log('SKIPPING ' + token.val)
             token = lex.next()
         }
     }
@@ -73,6 +97,30 @@ function parse(src) {
         parent.ls.push(newSection)
         parent[name] = newSection
         section = newSection
+
+        return newSection
+    }
+
+    function doCommand(cmd) {
+        let res
+        switch(cmd) {
+            case 'book':
+                res = {
+                    type: 'book',
+                    name: expectValue(),
+                    x: expectNumber(),
+                    y: expectNumber(),
+                }
+                if (matchSpecial('+')) {
+                    const upSkill = expectNumber()
+                    const skill = expectClassifier()
+                    res.skills = {}
+                    res.skills[skill] = upSkill
+                }
+                section.ls.push(res)
+                break
+        }
+        return res
     }
 
     function doStatement() {
@@ -82,6 +130,9 @@ function parse(src) {
         const series = matchSeries(token, '=')
         if (series > 0) {
             return declareMainSection(min(5-series, 1), token)
+
+        } else if (token.type === lex.SPECIAL && token.val === '.') {
+            doCommand( expectId() )
 
         } else {
             //log( '' + token )

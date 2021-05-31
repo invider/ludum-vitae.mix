@@ -9,7 +9,26 @@ function setupLV() {
     let baseX = 200
     let baseY = 400
 
+    function defineForSection(section, def) {
+        switch(def.type) {
+
+            case 'book':
+                const book = mob.spawn( dna.prop.Book, {
+                    x: section.x + def.x,
+                    y: section.y + def.y,
+                    title: def.name,
+                    skills: def.skills,
+                })
+                console.dir(book)
+                break
+        }
+    }
+
     function createSection(section, i) {
+
+        section.x = baseX
+        section.y = baseY
+        section.w = baseW
 
         mob.spawn( dna.prop.Sign, {
             x: baseX,
@@ -40,7 +59,11 @@ function setupLV() {
             lib.gen.fence.corner(lastX, baseY + baseH/2, 'bottom-left')
         }
 
-        baseX -= baseW
+        section.ls.forEach(def => {
+            defineForSection(section, def)
+        })
+
+        baseX -= section.w
     }
 
     lv.ls.forEach( (section, i) => createSection(section, i) )
